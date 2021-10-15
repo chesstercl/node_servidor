@@ -1,4 +1,5 @@
 const http = require('http');
+const { brotliDecompressSync } = require('zlib');
 
 const libros = [
     {'titulo': 'Codigo Limpio', 'autor': 'Robert C. Martin'},
@@ -8,14 +9,22 @@ const libros = [
 
 const server = http.createServer(( request, response) =>{
     
-    response.writeHead(404, {
+    response.writeHead(200, {
         'Content-Type': 'application/json'
     });
 
-    console.log(request.headers.authorization)
+    let body = [];
+
+    request.on('data', dataCliente => {
+        body.push(dataCliente)
+    })
+    .on('end', () =>{
+        body = Buffer.concat(body).toString();
+        console.log(body);
+    })
 
     response.end(
-        JSON.stringify( {data: null} )
+        JSON.stringify( {data: libros} )
     );
 });
 
