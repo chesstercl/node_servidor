@@ -31,6 +31,12 @@ const server = http.createServer(( request, response) =>{
             status = 200;
             res.status = 200;
             res.data = libros;
+        }else if(method ==='POST' && url ==='/libros'){
+            status = 200;
+            const { titulo, autor } = JSON.parse(body);
+            libros.push({ titulo, autor });
+            res.status = 200;
+            res.data = libros;
         }
 
         response.writeHead(status, {
