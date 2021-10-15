@@ -8,9 +8,10 @@ const libros = [
 
 const server = http.createServer(( request, response) =>{
     
+    response.statusCode = 404;
     response.setHeader('Content-Type', 'application/json');
     response.end(
-        JSON.stringify( {data: libros} )
+        JSON.stringify( {data: null} )
     );
 });
 
