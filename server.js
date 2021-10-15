@@ -1,10 +1,17 @@
 const http = require('http');
 
+const libros = [
+    {'titulo': 'Codigo Limpio', 'autor': 'Robert C. Martin'},
+    {'titulo': 'El Quijote de la Mancha', 'autor': 'Miguel de Cervantes'},
+    {'titulo': 'Martin Rivas', 'autor': 'Alberto Blest Gana'},
+]
+
 const server = http.createServer(( request, response) =>{
     
-    response.setHeader('Content-Type', 'text/html');
-    response.write('<h1>Hola mundo</h1>');
-    response.end();
+    response.setHeader('Content-Type', 'application/json');
+    response.end(
+        JSON.stringify( {data: libros} )
+    );
 });
 
 const PORT = 5000;
