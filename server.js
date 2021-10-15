@@ -9,9 +9,9 @@ const libros = [
 
 const server = http.createServer(( request, response) =>{
     
-    response.writeHead(200, {
-        'Content-Type': 'application/json'
-    });
+    const { method, url } = request;
+
+
 
     let body = [];
 
@@ -20,12 +20,29 @@ const server = http.createServer(( request, response) =>{
     })
     .on('end', () =>{
         body = Buffer.concat(body).toString();
-        console.log(body);
-    })
 
-    response.end(
-        JSON.stringify( {data: libros} )
-    );
+        let status = 404;
+        const res = {
+            status: 404,
+            data: null
+        }
+
+        if(method === 'GET' && url == '/libros'){
+            status = 200;
+            res.status = 200;
+            res.data = libros;
+        }
+
+        response.writeHead(status, {
+            'Content-Type': 'application/json'
+        });
+
+        response.end(
+            JSON.stringify( res )
+        );
+    });
+
+    
 });
 
 const PORT = 5000;
