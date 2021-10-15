@@ -12,6 +12,8 @@ const server = http.createServer(( request, response) =>{
         'Content-Type': 'application/json'
     });
 
+    console.log(request.headers.authorization)
+
     response.end(
         JSON.stringify( {data: null} )
     );
